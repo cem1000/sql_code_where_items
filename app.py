@@ -1,15 +1,19 @@
 import streamlit as st
 
 def to_sql_format(items, data_type):
-    formatted_items = []
-    for item in items:
-        if data_type == 'string':
-            formatted_items.append(f"'{item}'")
-        elif data_type == 'integer':
-            formatted_items.append(str(item))
-        else:
-            raise ValueError("Invalid data type, please choose 'string' or 'integer'")
-    return ", ".join(formatted_items)
+    if data_type == "string":
+        formatted_items = [f"'{item}'" for item in items]
+    else:
+        formatted_items = [f"{item}" for item in items]
+    
+    # Break items into lines with 5 items each
+    lines = [formatted_items[i:i+5] for i in range(0, len(formatted_items), 5)]
+    
+    # Join items in each line with commas
+    lines = [", ".join(line) for line in lines]
+    
+    # Join lines with line breaks
+    return "\n".join(lines)
 
 def app():
     st.title('SQL WHERE Clause Converter')
@@ -29,14 +33,17 @@ def app():
     data_type = st.selectbox('Select the data type of your items:', ['string', 'integer'])
     if st.button('Convert to SQL Format'):
         items = input_text.split('\n')
-        try:
-            formatted_items = to_sql_format(items, data_type)
-        except ValueError as e:
-            st.error(str(e))
+        if len(items) > 1:
+            try:
+                formatted_items = to_sql_format(items, data_type)
+            except ValueError as e:
+                st.error(str(e))
 
-        if formatted_items:
-            st.write(f"SQL format for {data_type} items:")
-            st.code(formatted_items)
+            if formatted_items:
+                st.write(f"SQL format for {data_type} items:")
+                st.code(formatted_items)
+        else:
+            st.warning("Please enter at least 2 items, each on a new line.")
 
 if __name__ == '__main__':
     app()
