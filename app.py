@@ -6,10 +6,10 @@ def to_sql_format(items, data_type, items_per_line=5):
     else:
         formatted_items = [f"{item}" for item in items]
 
-    # Insert line breaks after every 5 items
+    # Insert line breaks after every 5 items and add indentation
     lines = []
     for i in range(0, len(formatted_items), items_per_line):
-        line = ", ".join(formatted_items[i:i + items_per_line])
+        line = "  " + ", ".join(formatted_items[i:i + items_per_line])  # Add spaces before each line
         lines.append(line)
 
     # Join items with commas and wrap in brackets
