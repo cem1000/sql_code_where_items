@@ -1,5 +1,3 @@
-import streamlit as st
-
 def to_sql_format(items, data_type, items_per_line=5):
     if data_type == "string":
         formatted_items = [f"'{item}'" for item in items]
@@ -10,8 +8,6 @@ def to_sql_format(items, data_type, items_per_line=5):
     lines = []
     for i in range(0, len(formatted_items), items_per_line):
         line = ", ".join(formatted_items[i:i + items_per_line])
-        if i + items_per_line < len(formatted_items):
-            line += ","
         lines.append(line)
 
     # Join items with commas and wrap in brackets
