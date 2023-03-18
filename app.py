@@ -14,6 +14,7 @@ def to_sql_format(items, data_type, items_per_line=5):
     formatted_items = "(\n" + ",\n".join(lines) + "\n)"
 
     return formatted_items
+
 def app():
     st.title('SQL WHERE Clause Converter')
     st.sidebar.subheader('Instructions')
