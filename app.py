@@ -9,7 +9,11 @@ def to_sql_format(items, data_type):
     # Join items with commas and wrap in brackets
     formatted_items = "(" + ", ".join(formatted_items) + ")"
 
-    return formatted_items
+    # Break items into lines with 5 items each
+    lines = [formatted_items[i:i+25] for i in range(0, len(formatted_items), 25)]
+
+    # Join lines with line breaks and remove extra brackets
+    return "\n".join(lines).replace("),\n(", ", ").replace("(", "").replace(")", "")
 
 def app():
     st.title('SQL WHERE Clause Converter')
