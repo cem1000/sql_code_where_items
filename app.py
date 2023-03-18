@@ -5,15 +5,19 @@ def to_sql_format(items, data_type):
         formatted_items = [f"'{item}'" for item in items]
     else:
         formatted_items = [f"{item}" for item in items]
-    
+
+    # Join items with commas and wrap in brackets
+    formatted_items = "(" + ", ".join(formatted_items) + ")"
+
     # Break items into lines with 5 items each
     lines = [formatted_items[i:i+5] for i in range(0, len(formatted_items), 5)]
-    
-    # Join items in each line with commas
-    lines = [", ".join(line) for line in lines]
-    
-    # Join lines with line breaks
-    return "\n".join(lines)
+
+    # Join lines with commas and line breaks
+    lines = [",\n".join(line) for line in lines]
+
+    # Join lines with line breaks and remove extra brackets
+    return "\n".join(lines).replace("),\n(", ", ")
+
 
 def app():
     st.title('SQL WHERE Clause Converter')
