@@ -2,7 +2,7 @@ import streamlit as st
 
 def to_sql_format(items, data_type):
     if data_type == "string":
-        formatted_items = [f"'{item}'" for item in items]
+        formatted_items = [f"'{item}'" if item else "''" for item in items]
     else:
         formatted_items = [f"{item}" for item in items]
 
