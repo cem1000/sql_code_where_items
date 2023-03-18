@@ -1,3 +1,5 @@
+import streamlit as st
+
 def to_sql_format(items, data_type, items_per_line=5):
     if data_type == "string":
         formatted_items = [f"'{item}'" for item in items]
