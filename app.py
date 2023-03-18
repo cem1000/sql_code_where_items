@@ -2,22 +2,14 @@ import streamlit as st
 
 def to_sql_format(items, data_type):
     if data_type == "string":
-        formatted_items = [f"'{item}'" if item else "''" for item in items]
+        formatted_items = [f"'{item}'" for item in items]
     else:
         formatted_items = [f"{item}" for item in items]
 
     # Join items with commas and wrap in brackets
     formatted_items = "(" + ", ".join(formatted_items) + ")"
 
-    # Break items into lines with 5 items each
-    lines = [formatted_items[i:i+5] for i in range(0, len(formatted_items), 5)]
-
-    # Join lines with commas and line breaks
-    lines = [",\n".join(line) for line in lines]
-
-    # Join lines with line breaks and remove extra brackets
-    return "\n".join(lines).replace("),\n(", ", ")
-
+    return formatted_items
 
 def app():
     st.title('SQL WHERE Clause Converter')
